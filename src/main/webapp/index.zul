@@ -1,0 +1,23 @@
+<zk>
+<window xmlns="http://www.zkoss.org/2005/zul"
+        title="STUDENTS LIST"
+           apply="com.sys.vm.StudentsViewModel"
+           >
+
+    <!-- Listbox to display data -->
+    <listbox id="studentListbox" >
+
+         <listhead>
+         <listheader label="id"/>
+         <listheader label="First name"/>
+         <listheader label="Last Name"/>
+     </listhead>
+     <listitem value="${each.id}" forEach="${listStudents}">
+         <listcell label="${each.sd_fname}"/>
+         <listcell label="${each.sd_lname}"/>
+     </listitem>
+ </listbox>
+ 
+
+</window>
+</zk>
