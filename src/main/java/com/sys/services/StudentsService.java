@@ -6,10 +6,8 @@ import com.sys.entity.Students;
 
 public interface StudentsService {
 
-	public Students getEmployeeById(Long id);
-	public void  SaveEmployee(Students student);
-	public void  UpdateEmployee(Students student);
-	public void  DeleteEmployee(Students student);
-	public List<Students> getAllEmployees();
+	public Students getStudentsById(Long id);
+	public void  SaveStudents(Students student);
+	public List<Students> getAllStudents();
 
 }

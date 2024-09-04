@@ -14,48 +14,52 @@
                            http://www.springframework.org/schema/jpa/spring-jpa.xsd"                           
                            >
 
-
-
     <mvc:annotation-driven />
 	<mvc:resources location="/assets/" mapping="/assets/**" />
    
-	<context:component-scan base-package="com.sys.controller"/>
-	<context:component-scan base-package="com.sys.entity"/>
-	<context:component-scan base-package="com.sys.repository"/>
-	<context:component-scan base-package="com.sys.services"/>
-	<context:component-scan base-package="com.sys.vm"/>
+	<context:component-scan base-package="com.sys"/>
+
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".zul" />
 	</bean>
 	
-	 <!-- DataSource Configuration -->
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="org.postgresql.Driver" />
-        <property name="url" value="jdbc:postgresql://localhost:5432/zk_db"/>
-        <property name="username" value="postgres" />
-        <property name="password" value="root" />
-    </bean>
+			
+   	<bean id="dmds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url" value="jdbc:postgresql://localhost:5432/zk_db" />
+		<property name="username" value="postgres" />
+		<property name="password" value="root" />
+	</bean>
+	
+<!-- 	<bean class="com.sys.controller.StudentController">
+		<property name="dataSource" ref="dmds"></property>
+	</bean> -->
+	
+	
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <property name="dataSource" ref="dmds"/>
+<!--     <property name="persistenceUnitName" value="myPersistenceUnit"/>
+ -->    <property name="jpaVendorAdapter">
+        <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+            <property name="showSql" value="true"/>
+            <property name="generateDdl" value="true"/>
+            <property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect"/>
+        </bean>
+    </property>
 
-    <!-- JPA Entity Manager Factory -->
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-       <!--  <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
-        </property> -->
-        <property name="jpaProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-            </props>
-        </property>
-    </bean>
+    <!-- Optional: Specify JPA properties -->
+    <property name="jpaProperties">
+        <props>
+            <prop key="hibernate.hbm2ddl.auto">update</prop>
+           </props>
+    </property>
+</bean>
 
-     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-     </bean> 
-
+<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <property name="entityManagerFactory" ref="entityManagerFactory"/>
+</bean>
+	
 
 </beans>

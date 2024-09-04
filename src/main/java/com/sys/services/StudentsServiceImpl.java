@@ -14,37 +14,26 @@ import com.sys.repository.StudentsRepository;
 @Service
 public class StudentsServiceImpl implements StudentsService {
 
+	
 	 @WireVariable
 	private StudentsRepository repo;
 
 	@Override
-	public Students getEmployeeById(Long id) {
-		// TODO Auto-generated method stub
-		return repo.findById(id).orElse(null);}
-
-	@Transactional
-	@Override
-	public void SaveEmployee(Students stud) {
-		// TODO Auto-generated method stub
-		repo.save(stud);
-	}
-	
-	@Transactional
-	@Override
-	public void UpdateEmployee(Students stud) {
-		repo.save(stud);
+	public Students getStudentsById(Long id) {
+		return repo.findById(id).orElse(null);
 	}
 
 	@Override
-	public void DeleteEmployee(Students employserv) {
-		// TODO Auto-generated method stub
-		
+	public void SaveStudents(Students student) {
+		repo.save(student);
 	}
 
 	@Override
-	public List<Students> getAllEmployees() {
+	public List<Students> getAllStudents() {
 		return repo.findAll();
 	}
+
+	
 
 	
 
